@@ -7,6 +7,9 @@ User's house has flooded and all of his/her "Objects of Power" are ruined. User 
 ## User Story
 User needs to be able to see a start screen with back story of the flood and destroyed objects.
 User needs to be able to move forward, brake, and jump. 
+  - right arrow key = move forward
+  - left arrow key = brake
+  - space bar = jump
 User needs to be able lose 'Stamina' if he/she touches a construction hole (div), a dog (div), vampire (div), or toilet seat (div).
 User needs to be able steal/gain 'Stamina' by touching Donald James Trump (div).
 User needs to be able to finish a level by touching "Obect of Power" (div).
@@ -29,4 +32,16 @@ User needs to be able to see what "Objects of Power" in his dimensional backpack
 10. Walgreens - Floss
 
 ![IMG_4455](https://user-images.githubusercontent.com/54601694/66238980-570aa180-e6be-11e9-974c-300b8386640b.JPG)
+
+## Technologies Used
+
+HTML
+CSS
+JavaScript
+
+## Installation Instructions 
+
+## Unsolved Problems
+
+## Forthcoming Features
 
