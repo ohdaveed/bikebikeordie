@@ -14,7 +14,18 @@ const user = {
 
 const canvas = document.getElementById('canvas')
 const ctx = canvas.getContext('2d')
+const bike = new Image(); bike.src = "bike.png";
+const sx = 0
+const sy = 0
+const swidth = 40;
+const sheight = 40;
+const x = 50;
+const y = 444;
+const width = 30;
+const height = 30;
 
+
+function drawBackground(){
 // drawing road
 ctx.fillStyle = 'grey';
 ctx.fillRect(0, 440, 570, 45);
@@ -36,9 +47,22 @@ ctx.setLineDash([5]);
 ctx.strokeWidth = 2;
 ctx.stroke()
 
-// water
+// field
 
 ctx.fillStyle = 'rgb(133,60,8)';
 ctx.fillRect(0, 0, 570, 220)
-
+}
 // draw background
+
+function drawBike(){
+	ctx.drawImage(bike, sx, sy, swidth, sheight, x, y, width, height);
+}
+
+function draw (){
+	drawBackground();
+	drawBike();
+
+	requestAnimationFrame(draw);
+}
+draw();
+
