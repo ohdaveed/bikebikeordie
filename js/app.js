@@ -78,6 +78,7 @@ const captSquare = {
         } else return false;
     }
 }
+
 captSquare.draw();
 
 const cmdrCircle = {
@@ -175,7 +176,7 @@ function drawBackground() {
     ctx.setLineDash([5]);
     ctx.strokeWidth = 2;
     ctx.stroke();
-    
+
     // field
     ctx.fillStyle = rgb(133, 60, 8);
     ctx.fillRect(0, 0, 600, 220);
@@ -224,11 +225,11 @@ function animate() {
 
 animate();
 
-document.getElementById('start-game')addEventListener('click', () => {
-	drawBackground();
+document.getElementById('start-game') addEventListener('click', (event) => {
+    drawBackground();
 });
 
-document.getElementById('make-rect').addEventListener('click', () => {
+document.getElementById('make-rect').addEventListener('click', (event) => {
     drawRectangle();
 });
 
@@ -236,7 +237,7 @@ document.getElementById('make-grid').addEventListener('click', (event) => {
     drawGrid();
 });
 
-document.getElementById('clear').addEventListener('click', () => {
+document.getElementById('clear').addEventListener('click', (event) => {
     clearCanvas();
 });
 
