@@ -6,8 +6,8 @@ User's house has flooded and all of his/her "Objects of Power" are ruined. User 
 
 ## User Story
 -User needs to be able to see a start screen with back story of the flood and destroyed objects.
--User needs to be able to move forward (right arrow key), brake (left arrow key), and jump (space bar).
--User needs to be able lose 'Stamina' if he/she touches a construction hole (div), a dog (div), vampire (div), or toilet seat (div).
+-User needs to be able to move forward (up arrow), right (right arrow), left (left arrow), back (down arrow)
+-User needs to be able lose 'Stamina' if he/she touches a construction hole (div), a dog (div), a car, vampire (div), or toilet seat (div).
 -User has the dog after him/her at all times. If user is stationary too long the dog attacks.
 -User needs to be able steal/gain 'Stamina' by touching Donald James Trump (div).
 -User needs to be able to finish a level by touching "Obect of Power" (div).
@@ -31,9 +31,8 @@ User's house has flooded and all of his/her "Objects of Power" are ruined. User 
 
 ![IMG_4455](https://user-images.githubusercontent.com/54601694/66238980-570aa180-e6be-11e9-974c-300b8386640b.JPG)
 
-
-
 ![IMG_4456](https://user-images.githubusercontent.com/54601694/66241715-4578c800-e6c5-11e9-9814-c6a82ae77f58.JPG)
+
 
 
 ## Technologies Used
