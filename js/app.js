@@ -225,7 +225,7 @@ function animate() {
 
 animate();
 
-document.getElementById('start-game') addEventListener('click', (event) => {
+document.getElementById('start-game').addEventListener('click', (event) => {
     drawBackground();
 });
 
