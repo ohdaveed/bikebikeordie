@@ -3,21 +3,16 @@ const ctx = canvas.getContext('2d');
 console.log(ctx);
 
 
-let requestID;
-let animationRunning = false;
-let x = 0;
-function animate() {
-	
-	animationRunning = true;
 
-	captSquare.move();
-	clearCanvas();
-	captSquare.draw();
 
-	cmdrCircle.draw();
-	requestID = window.requestAnimationFrame(animate);
+function gameOver() {
+	document.write(`
+		<h1>YOU ARE DEAD YOU SHOULD NOT HAVE CRASHED INTO THAT</h1>
+    <FORM>
+      <INPUT TYPE="hidden" VALUE="you also shouldn't capitalize your html or use STYLE='' because it's not 1995">
+      <BUTTON STYLE="font-size: 18pt">CLICK</BUTTON>
+    </FORM>`)
 }
-animate();
 
 const stopAnimation = () => {
 	cancelAnimationFrame(requestID)
@@ -90,18 +85,13 @@ function drawRectangle() {
 	ctx.fill();
 }
 
-function init() {
-	drawBackground();
-
-}
-
 const captSquare = {
 	x: 100,
 	y: 52,
 	height: 46,
 	width: 46,
-	color: 'orangw',
-	speed: 2,
+	color: 'orange',
+	speed: 3,
 	direction: {
 		up: false,
 		right: false,
@@ -132,9 +122,36 @@ const captSquare = {
 	    if(this.direction.down) this.y += this.speed;
 	    if(this.direction.left) this.x -= this.speed;
 	},
+	checkCollision(thing) {
+		if(
+			this.x + this.width > thing.x &&
+			this.x < thing.x + thing.width &&
+			thing.y < this.y + this.height &&
+			thing.y + thing.height > this.y
+		) {
+			console.log("collision");
+			return true
+		}
+		else return false;
+	},
 }
 
 captSquare.draw();
+
+const obstacle = {
+	x: 250,
+	y: 250,
+	width: 100,
+	height: 100,
+	color: "purple",
+	draw () {
+		ctx.beginPath();
+		ctx.rect(this.x, this.y, this.width, this.height);
+		ctx.fillStyle = this.color;
+		ctx.fill();
+	}
+}
+obstacle.draw();
 
 const cmdrCircle = {
 	x: 200,
@@ -142,30 +159,59 @@ const cmdrCircle = {
 	r: 17,
 	color: "pink",
 	speed: 10,
-	draw() {
+	draw: function() {
 		ctx.beginPath();
-		ctx.arc(this.x, this.y, this.r, 0, 2*Math.PI);
+		ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
 		ctx.fillStyle = this.color;
 		ctx.fill();
 	},
-	move(direction) {
-		if(direction == "ArrowDown") {
-			this.y += this.speed;
-		}
-		if(direction == "ArrowUp") {
-			this.y -= this.speed;
-		}
-		if(direction == "ArrowLeft") {
-			this.x -= this.speed;
-		}
-		if(direction == "ArrowRight") {
-			this.x += this.speed;
-		}
+	move(key) {
+		console.log("you are pressing", key);
+    	if(key == "ArrowDown" && this.y + this.r + this.speed < canvas.height) {
+      		this.y += this.speed;
+    	}
+    	if(key == "ArrowUp" && this.y - this.r - this.speed > 0) {
+      		this.y -= this.speed;
+    	}
+    	if(key == "ArrowLeft" && this.x - this.r - this.speed > 0) {
+      		this.x -= this.speed;
+    	}
+    	if(key == "ArrowRight" && this.x + this.r + this.speed < canvas.width) {
+      		this.x += this.speed;
+    	}
 		eraseCanvas();
 		this.draw();
 	}
 }
 cmdrCircle.draw();
+
+let requestID;
+let animationRunning = false;
+let x = 0;
+
+function animate() {
+	
+	animationRunning = true;
+
+	captSquare.move();
+	clearCanvas();
+	captSquare.draw();
+
+	cmdrCircle.draw();
+	obstacle.draw();
+
+	if(captSquare.checkCollision(obstacle)) {
+		gameOver();
+		return;
+	} else {
+		requestID = window.requestAnimationFrame(animate);
+	}
+}
+animate();
+
+function init() {
+	drawBackground();
+}
 
 
 document.getElementById('start-game').addEventListener('click', (event) => {
