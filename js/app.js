@@ -2,8 +2,6 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-let rx = Math.floor(Math.random() * 700);
-let ry = Math.floor(Math.random() * 700);
 
 
 //     // checkCollision: function(thing) {
@@ -20,12 +18,61 @@ let ry = Math.floor(Math.random() * 700);
 //     //     else return false;
 //     // },
 // }
-
+drawBackground();
 const game = {
     score: 0,
     lives: 3,
     lives: 0,
     time: 50,
+    movingEnemies: [],
+    potholesArray: [],
+    powerUps: [],
+    start() {
+
+        game.createPotholes()
+    
+        drawBackground();
+        game.drawPotholes()
+        biker.draw();
+
+        animate();
+    },
+    drawEnemies: function() {
+        for(let i = 0; i <6; i++) {
+            
+        }
+    },
+    createPotholes:  function() {
+        for(let i = 0; i < 6; i++) {
+            let pothole = new StaticEnemy("pothole", 15, 'black')
+            this.potholesArray.push(pothole);
+        }
+        console.log(this.potholesArray)
+    },
+    drawPotholes: function() {
+        for (let i = 0; i < this.potholesArray.length; i++ ) {
+            this.potholesArray[i].draw()
+        }
+
+    }
+}
+
+class StaticEnemy {
+    constructor(name, r, color) {
+        this.name = name;
+        let rx = Math.floor(Math.random() * 700);
+        let ry = Math.floor(Math.random() * 700);
+        this.x = rx
+        this.y = ry
+        this.r = r;
+        this.color = color;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
 }
 
 
@@ -56,11 +103,6 @@ const biker = {
         if (key == "ArrowRight" && this.x + this.speed < canvas.width) {
             this.x += this.speed;
         }
-        clearCanvas();
-        drawBackground();
-        movingEnemy.draw();
-        this.draw();
-        staticEnemy.draw();
     },
 }
 
@@ -87,22 +129,21 @@ const movingEnemy = {
     }
 }
 
-const staticEnemy = {
+
+
+
+/*
+ (name, x, y, r = {
     x: rx,
     y: ry,
     r: 20,
     color: "black",
     draw: function() {
-        
-        for(let i = 0; i < 6; i++) {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-            ctx.fillStyle = this.color;
-            ctx.fill();
-        }
+
     },
 
 }
+*/
 
 function drawGrid() {
     ctx.strokeStyle = "black";
@@ -167,26 +208,15 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function start() {
-    
-    drawBackground();
-    biker.draw();
-    movingEnemy.draw();
-    staticEnemy.draw();
-}
 
-let x = 0;
+
+// let x = 0;
 function animate() {
-
-    console.log(++x)
-
-    movingEnemy.move();
+    // movingEnemy.move();
     clearCanvas()
     drawBackground();
-    movingEnemy.draw();
+    game.drawPotholes()
     biker.draw();
-    staticEnemy.draw();
-
     window.requestAnimationFrame(animate)
 
 }
@@ -248,7 +278,7 @@ function animate() {
 // Event Listeners
 
 document.getElementById('start-game').addEventListener('click', (event) => {
-    start();
+    game.start();
 });
 
 
@@ -261,7 +291,7 @@ document.getElementById('clear').addEventListener('click', (event) => {
 });
 
 document.getElementById('enemies').addEventListener('click', (event) => {
-    animate();
+    // animate();
 
 })
 
@@ -283,3 +313,19 @@ document.addEventListener('keyup', (event) => {
         captSquare.unsetDirection(event.key)
     }
 });
+/*
+
+class Person {
+    constructor(name) {
+        this.name = name
+        this.age = Math.random()*10
+        this.fish = "red"
+    }
+
+    greet() {
+        console.log("hi i am " + this.name)
+        console.log(this.fish)
+    }
+}
+
+*/
