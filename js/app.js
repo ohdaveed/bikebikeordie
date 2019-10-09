@@ -2,116 +2,117 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
-console.log(ctx);
 
-
-const captSquare = {
-    x: 502,
-    y: 52,
+// // const captSquare = {
+//     x: 502,
+//     y: 52,
+//     height: 46,
+//     width: 46,
+//     color: "orange",
+//     speed: 3,
+//     direction: {
+//         up: false,
+//         right: false,
+//         down: false,
+//         left: false,
+//     },
+//     draw: function() {
+//         ctx.beginPath();
+//         ctx.rect(this.x, this.y, this.width, this.height);
+//         ctx.fillStyle = this.color;
+//         ctx.fill();
+//     },
+//     move: function() {
+//         if (this.direction.up) {
+//             this.y -= this.speed;
+//         }
+//         if (this.direction.left) {
+//             this.x -= this.speed;
+//         }
+//         if (this.direction.right) {
+//             this.x += this.speed;
+//         }
+//         if (this.direction.down) {
+//             this.y += this.speed;
+//         }
+//     },
+//     setDirection: function(key) {
+//         if (key == "w") {
+//             this.direction.up = true;
+//         }
+//         if (key == "a") {
+//             this.direction.left = true;
+//         }
+//         if (key == "s") {
+//             this.direction.down = true;
+//         }
+//         if (key == "d") {
+//             this.direction.right = true;
+//         }
+//     },
+//     unsetDirection: function(key) {
+//         if (key == "w") {
+//             this.direction.up = false;
+//         }
+//         if (key == "a") {
+//             this.direction.left = false;
+//         }
+//         if (key == "s") {
+//             this.direction.down = false;
+//         }
+//         if (key == "d") {
+//             this.direction.right = false;
+//         }
+//     },
+//     // checkCollision: function(thing) {
+//     //     console.log("asdf")
+//     //     if (
+//     //         this.x + this.width > thing.x &&
+//     //         this.x < thing.x + thing.width &&
+//     //         this.y + this.height > thing.y &&
+//     //         this.y < thing.y + thing.height
+//     //     ) {
+//     //         console.log("collision");
+//     //         return true
+//     //     } 
+//     //     else return false;
+//     // },
+// }
+const biker = {
+    x: 5,
+    y: 650,
     height: 46,
     width: 46,
-    color: "orange",
-    speed: 3,
-    direction: {
-        up: false,
-        right: false,
-        down: false,
-        left: false,
-    },
+    color: "black",
+    speed: 5,
+
     draw: function() {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
     },
-    move: function() {
-        if (this.direction.up) {
-            this.y -= this.speed;
-        }
-        if (this.direction.left) {
-            this.x -= this.speed;
-        }
-        if (this.direction.right) {
-            this.x += this.speed;
-        }
-        if (this.direction.down) {
-            this.y += this.speed;
-        }
-    },
-    setDirection: function(key) {
-        if (key == "w") {
-            this.direction.up = true;
-        }
-        if (key == "a") {
-            this.direction.left = true;
-        }
-        if (key == "s") {
-            this.direction.down = true;
-        }
-        if (key == "d") {
-            this.direction.right = true;
-        }
-    },
-    unsetDirection: function(key) {
-        if (key == "w") {
-            this.direction.up = false;
-        }
-        if (key == "a") {
-            this.direction.left = false;
-        }
-        if (key == "s") {
-            this.direction.down = false;
-        }
-        if (key == "d") {
-            this.direction.right = false;
-        }
-    },
-    checkCollision: function(thing) {
-        if (
-            this.x + this.width > thing.x &&
-            this.x < thing.x + thing.width &&
-            this.y + this.height > thing.y &&
-            this.y < thing.y + thing.height
-        ) {
-            console.log("collision");
-            return true
-        } else return false;
-    }
-}
 
-captSquare.draw();
-
-const cmdrCircle = {
-    x: 200,
-    y: 40,
-    r: 17,
-    color: "pink",
-    speed: 10,
-    draw: function() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    },
     move: function(key) {
-        console.log("you are pressing", key);
-        if (key == "ArrowDown" && this.y + this.r + this.speed < canvas.height) {
+        if (key == "ArrowDown" && this.y + this.speed < canvas.height) {
             this.y += this.speed;
         }
-        if (key == "ArrowUp" && this.y - this.r - this.speed > 0) {
+        if (key == "ArrowUp" && this.y - this.speed > 0) {
             this.y -= this.speed;
         }
-        if (key == "ArrowLeft" && this.x - this.r - this.speed > 0) {
+        if (key == "ArrowLeft" && this.x - this.speed > 0) {
             this.x -= this.speed;
         }
-        if (key == "ArrowRight" && this.x + this.r + this.speed < canvas.width) {
+        if (key == "ArrowRight" && this.x + this.speed < canvas.width) {
             this.x += this.speed;
         }
         clearCanvas();
+        drawBackground();
+        obstacle.draw();
+        obstacle.move();
         this.draw();
-    }
+    },
 }
-cmdrCircle.draw();
 
 const obstacle = {
     x: 250,
@@ -119,14 +120,17 @@ const obstacle = {
     width: 100,
     height: 100,
     color: "purple",
+    speed: 10,
     draw: function() {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
+    },
+    move: function() {
+        this.x =+ 5;
     }
 }
-obstacle.draw();
 
 function drawGrid() {
     ctx.strokeStyle = "black";
@@ -149,12 +153,12 @@ function drawGrid() {
 function drawBackground() {
     // drawing road
     ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 440, 600, 45);
-    ctx.fillRect(0, 240, 600, 45);
+    ctx.fillRect(0, 440, 700, 45);
+    ctx.fillRect(0, 240, 700, 45);
 
     ctx.beginPath();
     ctx.moveTo(0, 395);
-    ctx.lineTo(600, 395)
+    ctx.lineTo(700, 395)
     ctx.strokeStyle = 'white';
     ctx.setLineDash([5]);
     ctx.lineWidth = 3;
@@ -163,7 +167,7 @@ function drawBackground() {
 
     ctx.beginPath();
     ctx.moveTo(0, 350);
-    ctx.lineTo(600, 350)
+    ctx.lineTo(700, 350)
     ctx.strokeStyle = 'white';
     ctx.setLineDash([0]);
     ctx.strokeWidth = 4;
@@ -171,15 +175,15 @@ function drawBackground() {
 
     ctx.beginPath();
     ctx.moveTo(0, 305);
-    ctx.lineTo(600, 305)
+    ctx.lineTo(700, 305)
     ctx.strokeStyle = 'white';
     ctx.setLineDash([5]);
     ctx.strokeWidth = 2;
     ctx.stroke();
 
     // field
-    ctx.fillStyle = rgb(133, 60, 8);
-    ctx.fillRect(0, 0, 600, 220);
+    ctx.fillStyle = 'rgb(11, 102, 35)';
+    ctx.fillRect(0, 0, 700, 220);
 }
 
 function drawRectangle() {
@@ -189,49 +193,100 @@ function drawRectangle() {
     ctx.fill();
 }
 
-
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
+
+// drawBackground();
+// obstacle.draw();
+// biker.draw();
+
+// // const cmdrCircle = {
+//     x: 200,
+//     y: 40,
+//     r: 17,
+//     color: "pink",
+//     speed: 10,
+//     draw: function() {
+//         ctx.beginPath();
+//         ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+//         ctx.fillStyle = this.color;
+//         ctx.fill();
+//     },
+//     move: function(key) {
+//         console.log("you are pressing", key);
+//         if (key == "ArrowDown" && this.y + this.r + this.speed < canvas.height) {
+//             this.y += this.speed;
+//         }
+//         if (key == "ArrowUp" && this.y - this.r - this.speed > 0) {
+//             this.y -= this.speed;
+//         }
+//         if (key == "ArrowLeft" && this.x - this.r - this.speed > 0) {
+//             this.x -= this.speed;
+//         }
+//         if (key == "ArrowRight" && this.x + this.r + this.speed < canvas.width) {
+//             this.x += this.speed;
+//         }
+//         clearCanvas();
+//         this.draw();
+//         obstacle.draw();
+//         captSquare.draw();
+//         captSquare.checkCollision(this);
+
+
+//     }
+// }
+
+// cmdrCircle.draw();
+
+
 
 const stopAnimation = () => {
     cancelAnimationFrame(requestID);
     animationRunning = false;
 }
 
-
 let requestID;
 let animationRunning = false;
-const x = 0;
 
-function animate() {
+
+function start() {
 
     animationRunning = true;
-
-    captSquare.move();
-    clearCanvas();
-    captSquare.draw();
-
-    cmdrCircle.draw();
+    drawBackground();
+    biker.draw();
+    biker.move();
     obstacle.draw();
+    obstacle.move();
 
-    if (captSquare.checkCollision(obstacle)) {
-        gameOver();
-        return;
-    } else {
-        requestID = window.requestAnimationFrame(animate);
-    }
+    // if (captSquare.checkCollision(obstacle)) {
+    //     gameOver();
+    //     return;
+    // } else {
+    // requestID = 
+    window.requestAnimationFrame(start)
 }
 
-animate();
+let y = 0;
+function animate() {
+
+    console.log(++y)
+
+    obstacle.move();
+    clearCanvas()
+    obstacle.draw();
+    biker.draw();
+
+    window.requestAnimationFrame(animate)
+
+}
+
+// Event Listeners
 
 document.getElementById('start-game').addEventListener('click', (event) => {
-    drawBackground();
+    start();
 });
 
-document.getElementById('make-rect').addEventListener('click', (event) => {
-    drawRectangle();
-});
 
 document.getElementById('make-grid').addEventListener('click', (event) => {
     drawGrid();
@@ -241,13 +296,17 @@ document.getElementById('clear').addEventListener('click', (event) => {
     clearCanvas();
 });
 
+document.getElementById('enemies')addEventListener('click', (event) => {
+
+})
+
 document.getElementById('stop-animation').addEventListener('click', (event) => {
     stopAnimation();
 })
 
 document.addEventListener('keydown', (event) => {
     if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
-        cmdrCircle.move(event.key)
+        biker.move(event.key)
     }
     if (['w', 'a', 's', 'd'].includes(event.key)) {
         captSquare.setDirection(event.key)
