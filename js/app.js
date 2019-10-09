@@ -303,16 +303,10 @@ document.addEventListener('keydown', (event) => {
     if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
         biker.move(event.key)
     }
-    if (['w', 'a', 's', 'd'].includes(event.key)) {
-        captSquare.setDirection(event.key)
-    }
+
 });
 
-document.addEventListener('keyup', (event) => {
-    if (['w', 'a', 's', 'd'].includes(event.key)) {
-        captSquare.unsetDirection(event.key)
-    }
-});
+
 /*
 
 class Person {
