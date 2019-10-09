@@ -2,68 +2,10 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+let rx = Math.floor(Math.random() * 700);
+let ry = Math.floor(Math.random() * 700);
 
-// // const captSquare = {
-//     x: 502,
-//     y: 52,
-//     height: 46,
-//     width: 46,
-//     color: "orange",
-//     speed: 3,
-//     direction: {
-//         up: false,
-//         right: false,
-//         down: false,
-//         left: false,
-//     },
-//     draw: function() {
-//         ctx.beginPath();
-//         ctx.rect(this.x, this.y, this.width, this.height);
-//         ctx.fillStyle = this.color;
-//         ctx.fill();
-//     },
-//     move: function() {
-//         if (this.direction.up) {
-//             this.y -= this.speed;
-//         }
-//         if (this.direction.left) {
-//             this.x -= this.speed;
-//         }
-//         if (this.direction.right) {
-//             this.x += this.speed;
-//         }
-//         if (this.direction.down) {
-//             this.y += this.speed;
-//         }
-//     },
-//     setDirection: function(key) {
-//         if (key == "w") {
-//             this.direction.up = true;
-//         }
-//         if (key == "a") {
-//             this.direction.left = true;
-//         }
-//         if (key == "s") {
-//             this.direction.down = true;
-//         }
-//         if (key == "d") {
-//             this.direction.right = true;
-//         }
-//     },
-//     unsetDirection: function(key) {
-//         if (key == "w") {
-//             this.direction.up = false;
-//         }
-//         if (key == "a") {
-//             this.direction.left = false;
-//         }
-//         if (key == "s") {
-//             this.direction.down = false;
-//         }
-//         if (key == "d") {
-//             this.direction.right = false;
-//         }
-//     },
+
 //     // checkCollision: function(thing) {
 //     //     console.log("asdf")
 //     //     if (
@@ -78,6 +20,15 @@ const ctx = canvas.getContext('2d');
 //     //     else return false;
 //     // },
 // }
+
+const game = {
+    score: 0,
+    lives: 3,
+    lives: 0,
+    time: 50,
+}
+
+
 const biker = {
     x: 5,
     y: 650,
@@ -92,7 +43,6 @@ const biker = {
         ctx.fillStyle = this.color;
         ctx.fill();
     },
-
     move: function(key) {
         if (key == "ArrowDown" && this.y + this.speed < canvas.height) {
             this.y += this.speed;
@@ -108,28 +58,50 @@ const biker = {
         }
         clearCanvas();
         drawBackground();
-        obstacle.draw();
-        obstacle.move();
+        movingEnemy.draw();
         this.draw();
+        staticEnemy.draw();
     },
 }
 
-const obstacle = {
+
+
+const movingEnemy = {
     x: 250,
     y: 250,
     width: 100,
     height: 100,
     color: "purple",
-    speed: 10,
+    speed: 1,
+    obstacleCenter: 50,
     draw: function() {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
         ctx.fillStyle = this.color;
         ctx.fill();
+
     },
     move: function() {
-        this.x =+ 5;
+        this.x += 5;
+
     }
+}
+
+const staticEnemy = {
+    x: rx,
+    y: ry,
+    r: 20,
+    color: "black",
+    draw: function() {
+        
+        for(let i = 0; i < 6; i++) {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+    },
+
 }
 
 function drawGrid() {
@@ -153,8 +125,13 @@ function drawGrid() {
 function drawBackground() {
     // drawing road
     ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 440, 700, 45);
-    ctx.fillRect(0, 240, 700, 45);
+    ctx.fillRect(0, 450, canvas.width, 50);
+    ctx.fillRect(0, 250, canvas.width, 50);
+    ctx.fillRect(0, 650, canvas.width, 50);
+    ctx.fillRect(0, 150, canvas.width, 50);
+    ctx.fillRect(0, 450, canvas.width, 50);
+    ctx.fillRect(0, 450, canvas.width, 50);
+
 
     ctx.beginPath();
     ctx.moveTo(0, 395);
@@ -162,7 +139,7 @@ function drawBackground() {
     ctx.strokeStyle = 'white';
     ctx.setLineDash([5]);
     ctx.lineWidth = 3;
-    ctx.strokeWidth = 2;
+    ctx.strokeWidth = 4;
     ctx.stroke();
 
     ctx.beginPath();
@@ -178,23 +155,40 @@ function drawBackground() {
     ctx.lineTo(700, 305)
     ctx.strokeStyle = 'white';
     ctx.setLineDash([5]);
-    ctx.strokeWidth = 2;
+    ctx.strokeWidth = 4;
     ctx.stroke();
 
     // field
     ctx.fillStyle = 'rgb(11, 102, 35)';
-    ctx.fillRect(0, 0, 700, 220);
-}
-
-function drawRectangle() {
-    ctx.beginPath();
-    ctx.rect(70, 200, 280, 80);
-    ctx.fillStyle = "blue";
-    ctx.fill();
+    ctx.fillRect(0, 0, 700, 100);
 }
 
 function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function start() {
+    
+    drawBackground();
+    biker.draw();
+    movingEnemy.draw();
+    staticEnemy.draw();
+}
+
+let x = 0;
+function animate() {
+
+    console.log(++x)
+
+    movingEnemy.move();
+    clearCanvas()
+    drawBackground();
+    movingEnemy.draw();
+    biker.draw();
+    staticEnemy.draw();
+
+    window.requestAnimationFrame(animate)
+
 }
 
 // drawBackground();
@@ -241,45 +235,15 @@ function clearCanvas() {
 
 
 
-const stopAnimation = () => {
-    cancelAnimationFrame(requestID);
-    animationRunning = false;
-}
+// const stopAnimation = () => {
+//     cancelAnimationFrame(requestID);
+//     animationRunning = false;
+// }
 
-let requestID;
-let animationRunning = false;
+// let requestID;
+// let animationRunning = false;
 
 
-function start() {
-
-    animationRunning = true;
-    drawBackground();
-    biker.draw();
-    biker.move();
-    obstacle.draw();
-    obstacle.move();
-
-    // if (captSquare.checkCollision(obstacle)) {
-    //     gameOver();
-    //     return;
-    // } else {
-    // requestID = 
-    window.requestAnimationFrame(start)
-}
-
-let y = 0;
-function animate() {
-
-    console.log(++y)
-
-    obstacle.move();
-    clearCanvas()
-    obstacle.draw();
-    biker.draw();
-
-    window.requestAnimationFrame(animate)
-
-}
 
 // Event Listeners
 
@@ -296,7 +260,8 @@ document.getElementById('clear').addEventListener('click', (event) => {
     clearCanvas();
 });
 
-document.getElementById('enemies')addEventListener('click', (event) => {
+document.getElementById('enemies').addEventListener('click', (event) => {
+    animate();
 
 })
 
