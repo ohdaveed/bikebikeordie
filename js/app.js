@@ -2,6 +2,7 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+let raf;
 
 
 //     // checkCollision: function(thing) {
@@ -19,6 +20,7 @@ const ctx = canvas.getContext('2d');
 //     // },
 // }
 drawBackground();
+
 const game = {
     score: 0,
     lives: 3,
@@ -34,9 +36,13 @@ const game = {
         drawBackground();
         game.drawPotholes()
         biker.draw();
-
+        /// 4 interval 
+            // create enemy
         animate();
     },
+
+    // 3. create enemy
+
     drawEnemies: function() {
         for(let i = 0; i <6; i++) {
             
@@ -54,14 +60,25 @@ const game = {
             this.potholesArray[i].draw()
         }
 
+    },
+    gameOver: function() {
+
+    },
+    checkCollision: function() {
+
+    },
+
     }
-}
+
+
 
 class StaticEnemy {
     constructor(name, r, color) {
         this.name = name;
         let rx = Math.floor(Math.random() * 700);
+
         let ry = Math.floor(Math.random() * 700);
+        // 1 fix this to be on street
         this.x = rx
         this.y = ry
         this.r = r;
@@ -72,6 +89,31 @@ class StaticEnemy {
         ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
         ctx.fillStyle = this.color;
         ctx.fill();
+    }
+}
+
+
+// 2 -- convert to class
+class MovingEnemy {
+    constructor(name, width, height, color, speed) {
+        this.name = name;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.speed = speed;
+
+    }   
+    draw() {
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }   
+    move() {
+        this.x += 5;
+    }   
+    collide() {
+
     }
 }
 
@@ -107,14 +149,13 @@ const biker = {
 }
 
 
-
-const movingEnemy = {
-    x: 250,
-    y: 250,
-    width: 100,
-    height: 100,
+const box = {
+    x: 0,
+    y: 400,
+    width: 50,
+    height: 50,
     color: "purple",
-    speed: 1,
+    vx: 5,
     obstacleCenter: 50,
     draw: function() {
         ctx.beginPath();
@@ -124,26 +165,16 @@ const movingEnemy = {
 
     },
     move: function() {
-        this.x += 5;
+        this.x += this.vx;
 
+        if (this.x + this.vx > canvas.width || this.x + this.vx < 0) {
+            this.vx = -this.vx;
+        }
+
+        // raf = requestAnimationFrame(this.move);
+
+        }
     }
-}
-
-
-
-
-/*
- (name, x, y, r = {
-    x: rx,
-    y: ry,
-    r: 20,
-    color: "black",
-    draw: function() {
-
-    },
-
-}
-*/
 
 function drawGrid() {
     ctx.strokeStyle = "black";
@@ -163,6 +194,7 @@ function drawGrid() {
     }
 }
 
+
 function drawBackground() {
     // drawing road
     ctx.fillStyle = 'grey';
@@ -170,8 +202,7 @@ function drawBackground() {
     ctx.fillRect(0, 250, canvas.width, 50);
     ctx.fillRect(0, 650, canvas.width, 50);
     ctx.fillRect(0, 150, canvas.width, 50);
-    ctx.fillRect(0, 450, canvas.width, 50);
-    ctx.fillRect(0, 450, canvas.width, 50);
+
 
 
     ctx.beginPath();
@@ -208,8 +239,6 @@ function clearCanvas() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-
-
 // let x = 0;
 function animate() {
     // movingEnemy.move();
@@ -217,13 +246,15 @@ function animate() {
     drawBackground();
     game.drawPotholes()
     biker.draw();
+    box.draw();
+    box.move();
+
     window.requestAnimationFrame(animate)
+
+
 
 }
 
-// drawBackground();
-// obstacle.draw();
-// biker.draw();
 
 // // const cmdrCircle = {
 //     x: 200,
@@ -306,20 +337,3 @@ document.addEventListener('keydown', (event) => {
 
 });
 
-
-/*
-
-class Person {
-    constructor(name) {
-        this.name = name
-        this.age = Math.random()*10
-        this.fish = "red"
-    }
-
-    greet() {
-        console.log("hi i am " + this.name)
-        console.log(this.fish)
-    }
-}
-
-*/
