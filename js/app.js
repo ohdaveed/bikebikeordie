@@ -224,9 +224,13 @@ function drawBackground() {
     ctx.strokeWidth = 4;
     ctx.stroke();
 
-    ctx.beginPath(); ctx.moveTo(0, 650); ctx.lineTo(700, 650) ctx.strokeStyle
-    = 'white'; ctx.setLineDash([0]); ctx.strokeWidth = 4; ctx.stroke();
-
+    ctx.beginPath(); 
+    ctx.moveTo(0, 650); 
+    ctx.lineTo(700, 650); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
 
     ctx.beginPath();
     ctx.moveTo(0, 305);
@@ -314,24 +318,6 @@ function animate() {
 document.getElementById('start-game').addEventListener('click', (event) => {
     game.start();
 });
-
-
-document.getElementById('make-grid').addEventListener('click', (event) => {
-    drawGrid();
-});
-
-document.getElementById('clear').addEventListener('click', (event) => {
-    clearCanvas();
-});
-
-document.getElementById('enemies').addEventListener('click', (event) => {
-    // animate();
-
-})
-
-document.getElementById('stop-animation').addEventListener('click', (event) => {
-    stopAnimation();
-})
 
 document.addEventListener('keydown', (event) => {
     if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
