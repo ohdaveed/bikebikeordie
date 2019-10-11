@@ -185,7 +185,7 @@ const vampire = {
 }
 
 function drawBackground() {
-    // drawing road
+    // drawing side walks
     ctx.fillStyle = 'grey';
     ctx.fillRect(0, 350, canvas.width, 50);
     ctx.fillRect(0, 200, canvas.width, 50);
@@ -193,16 +193,7 @@ function drawBackground() {
     ctx.fillRect(0, 50, canvas.width, 50);
     ctx.fillRect(0, 500, canvas.width, 50);
 
-
-
-    ctx.beginPath();
-    ctx.moveTo(0, 395);
-    ctx.lineTo(700, 395)
-    ctx.strokeStyle = 'white';
-    ctx.setLineDash([5]);
-    ctx.lineWidth = 3;
-    ctx.strokeWidth = 4;
-    ctx.stroke();
+    // drawing roads
 
     ctx.beginPath();
     ctx.moveTo(0, 650);
@@ -210,6 +201,26 @@ function drawBackground() {
     ctx.strokeStyle = 'white';
     ctx.setLineDash([0]);
     ctx.strokeWidth = 4;
+    ctx.stroke();
+
+
+    ctx.beginPath();
+    ctx.moveTo(0, 395);
+    ctx.lineTo(700, 395)
+    ctx.strokeStyle = 'grey';
+    ctx.setLineDash([5]);
+    ctx.lineWidth = 3;
+    ctx.strokeWidth = 4;
+    ctx.stroke();
+
+
+    // Creates Solid Lines
+    ctx.beginPath(); 
+    ctx.moveTo(0, 650); 
+    ctx.lineTo(700, 650); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
     ctx.stroke();
 
     ctx.beginPath(); 
@@ -220,15 +231,91 @@ function drawBackground() {
     ctx.strokeWidth = 4; 
     ctx.stroke();
 
+    ctx.beginPath(); 
+    ctx.moveTo(0, 500); 
+    ctx.lineTo(700, 500); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
+
+    ctx.beginPath(); 
+    ctx.moveTo(0, 350); 
+    ctx.lineTo(700, 350); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
+
+    ctx.beginPath(); 
+    ctx.moveTo(0, 250); 
+    ctx.lineTo(700, 250); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
+
+    ctx.beginPath(); 
+    ctx.moveTo(0, 200); 
+    ctx.lineTo(700, 200); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
+
+    ctx.beginPath(); 
+    ctx.moveTo(0, 100); 
+    ctx.lineTo(700, 100); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
+
+
+
+
+    ctx.beginPath(); 
+    ctx.moveTo(0, 400); 
+    ctx.lineTo(700, 400); 
+    ctx.strokeStyle = 'white'; 
+    ctx.setLineDash([0]); 
+    ctx.strokeWidth = 4; 
+    ctx.stroke();
+
+
     ctx.beginPath();
-    ctx.moveTo(0, 305);
-    ctx.lineTo(700, 305)
+    ctx.moveTo(0, 150);
+    ctx.lineTo(700, 150)
     ctx.strokeStyle = 'white';
     ctx.setLineDash([5]);
     ctx.strokeWidth = 4;
     ctx.stroke();
 
-    // field
+    ctx.beginPath();
+    ctx.moveTo(0, 300);
+    ctx.lineTo(700, 300)
+    ctx.strokeStyle = 'white';
+    ctx.setLineDash([5]);
+    ctx.strokeWidth = 4;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 450);
+    ctx.lineTo(700, 450)
+    ctx.strokeStyle = 'white';
+    ctx.setLineDash([5]);
+    ctx.strokeWidth = 4;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, 600);
+    ctx.lineTo(700, 600)
+    ctx.strokeStyle = 'white';
+    ctx.setLineDash([5]);
+    ctx.strokeWidth = 4;
+    ctx.stroke();
+
+    //  Drawing Safe Zone
     ctx.fillStyle = 'rgb(11, 102, 35)';
     ctx.fillRect(0, 0, 700, 50);
 }
