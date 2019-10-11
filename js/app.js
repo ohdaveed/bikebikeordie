@@ -4,7 +4,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let raf;
 
-
 //     // checkCollision: function(thing) {
 //     //     console.log("asdf")
 //     //     if (
@@ -19,7 +18,7 @@ let raf;
 //     //     else return false;
 //     // },
 // }
-drawBackground();
+// drawBackground();
 
 const game = {
     score: 0,
@@ -29,34 +28,54 @@ const game = {
     movingEnemies: [],
     potholesArray: [],
     powerUps: [],
-    start() {
+    cars: [],
+    start: function() {
 
-        game.createPotholes()
-    
+        game.createPotholes();
+        game.createCars();
+
         drawBackground();
-        game.drawPotholes()
+        game.drawPotholes();
+        game.drawCars();
         biker.draw();
+
         /// 4 interval 
-            // create enemy
+        // create enemy
         animate();
     },
 
-    // 3. create enemy
+    createCars: function() {
+        for (let i = 0; i < 3; i++) {
+            let car = new MovingEnemy('car', 100, 50, 'red', 5, 600, 100)
 
-    drawEnemies: function() {
-        for(let i = 0; i <6; i++) {
-            
+            this.cars.push(car);
         }
+        console.log(this.cars)
     },
-    createPotholes:  function() {
-        for(let i = 0; i < 6; i++) {
+
+    createPotholes: function() {
+        for (let i = 0; i < 6; i++) {
             let pothole = new StaticEnemy("pothole", 15, 'black')
             this.potholesArray.push(pothole);
         }
         console.log(this.potholesArray)
     },
+
+    drawEnemies: function() {
+        for (let i = 0; i < 6; i++) {
+            console.log[i]
+        }
+    },
+
+    drawCars: function() {
+        for (let i = 0; i < this.cars.length; i++) {
+            this.cars[i].draw();
+            this.cars[i].move()
+        }
+    },
+
     drawPotholes: function() {
-        for (let i = 0; i < this.potholesArray.length; i++ ) {
+        for (let i = 0; i < this.potholesArray.length; i++) {
             this.potholesArray[i].draw()
         }
 
@@ -65,12 +84,42 @@ const game = {
 
     },
     checkCollision: function() {
+        const rect1 = [biker.x, biker.y, biker.width, biker.height]
 
     },
 
+}
+
+class MovingEnemy {
+    constructor(name, width, height, color, vx, x, y) {
+        this.name = name;
+        this.width = width;
+        this.height = height;
+        this.color = color;
+        this.vx = vx;
+        this.x = x ;
+        this.y = y;
     }
+    draw() {
+        ctx.beginPath();
+        ctx.rect(this.x, this.y, this.width, this.height);
+        ctx.fillStyle = this.color;
+        ctx.fill();
+    }
+    move() {
+        this.x -= this.vx;
+        if (this.x <= 0) {
+             this.x = 600
+             // this.x -= this.vx
+        }
+        // else {
+            // this.x = 600;
+        // }
+    }
+    collide() {
 
-
+    }
+}
 
 class StaticEnemy {
     constructor(name, r, color) {
@@ -91,32 +140,6 @@ class StaticEnemy {
         ctx.fill();
     }
 }
-
-
-// 2 -- convert to class
-class MovingEnemy {
-    constructor(name, width, height, color, speed) {
-        this.name = name;
-        this.width = width;
-        this.height = height;
-        this.color = color;
-        this.speed = speed;
-
-    }   
-    draw() {
-        ctx.beginPath();
-        ctx.rect(this.x, this.y, this.width, this.height);
-        ctx.fillStyle = this.color;
-        ctx.fill();
-    }   
-    move() {
-        this.x += 5;
-    }   
-    collide() {
-
-    }
-}
-
 
 const biker = {
     x: 5,
@@ -171,10 +194,8 @@ const box = {
             this.vx = -this.vx;
         }
 
-        // raf = requestAnimationFrame(this.move);
-
-        }
     }
+}
 
 function drawGrid() {
     ctx.strokeStyle = "black";
@@ -246,12 +267,11 @@ function animate() {
     drawBackground();
     game.drawPotholes()
     biker.draw();
+    game.drawCars();
     box.draw();
     box.move();
 
     window.requestAnimationFrame(animate)
-
-
 
 }
 
@@ -336,4 +356,3 @@ document.addEventListener('keydown', (event) => {
     }
 
 });
-
