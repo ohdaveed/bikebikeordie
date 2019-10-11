@@ -6,33 +6,29 @@ let raf;
 
 drawBackground();
 
+// Game Object
+
 const game = {
     score: 0,
     lives: 3,
     lives: 0,
     time: 50,
-    movingEnemies: [],
-    potholesArray: [],
-    powerUps: [],
+    potholes: [],
+    vampires: [],
     cars: [],
     start: function() {
 
         game.createPotholes();
         game.createCars();
-
-        drawBackground();
         game.drawPotholes();
         game.drawCars();
         biker.draw();
-
-        /// 4 interval 
-        // create enemy
         animate();
     },
 
     createCars: function() {
         for (let i = 0; i < 3; i++) {
-            let car = new MovingEnemy('car', 100, 50, 'red', 5, 600, 100)
+            let car = new MovingEnemy('car', 100, 50, 'red', 5, 600, 100);
             this.cars.push(car);
         }
         console.log(this.cars)
@@ -41,15 +37,17 @@ const game = {
     createPotholes: function() {
         for (let i = 0; i < 6; i++) {
             let pothole = new StaticEnemy("pothole", 15, 'black')
-            this.potholesArray.push(pothole);
+            this.potholes.push(pothole);
         }
-        console.log(this.potholesArray)
+        console.log(this.potholes)
     },
 
-    drawEnemies: function() {
-        for (let i = 0; i < 6; i++) {
-            console.log[i]
+    createVampires: function() {
+        for (let i = 0; i < 3; i++) {
+            let vampire = new MovingEnemy("vampire", 50, 50, 'purple', 5, 400, 100);
+            this.vampires.push(vampire);
         }
+        console.log(this.vampires);
     },
 
     drawCars: function() {
@@ -60,19 +58,13 @@ const game = {
     },
 
     drawPotholes: function() {
-        for (let i = 0; i < this.potholesArray.length; i++) {
-            this.potholesArray[i].draw()
+        for (let i = 0; i < this.potholes.length; i++) {
+            this.potholes[i].draw()
         }
 
     },
-
-    gameOver: function() {
-
-    },
-
-    checkCollision: function() {},
-
 }
+
 
 class MovingEnemy {
     constructor(name, width, height, color, vx, x, y) {
@@ -96,10 +88,6 @@ class MovingEnemy {
         if (this.x <= 0) {
             this.x = 600;
         }
-    }
-
-    collide() {
-
     }
 }
 
@@ -261,57 +249,6 @@ function animate() {
 
     window.requestAnimationFrame(animate)
 }
-
-
-// // const cmdrCircle = {
-//     x: 200,
-//     y: 40,
-//     r: 17,
-//     color: "pink",
-//     speed: 10,
-//     draw: function() {
-//         ctx.beginPath();
-//         ctx.arc(this.x, this.y, this.r, 0, 2 * Math.PI);
-//         ctx.fillStyle = this.color;
-//         ctx.fill();
-//     },
-//     move: function(key) {
-//         console.log("you are pressing", key);
-//         if (key == "ArrowDown" && this.y + this.r + this.speed < canvas.height) {
-//             this.y += this.speed;
-//         }
-//         if (key == "ArrowUp" && this.y - this.r - this.speed > 0) {
-//             this.y -= this.speed;
-//         }
-//         if (key == "ArrowLeft" && this.x - this.r - this.speed > 0) {
-//             this.x -= this.speed;
-//         }
-//         if (key == "ArrowRight" && this.x + this.r + this.speed < canvas.width) {
-//             this.x += this.speed;
-//         }
-//         clearCanvas();
-//         this.draw();
-//         obstacle.draw();
-//         captSquare.draw();
-//         captSquare.checkCollision(this);
-
-
-//     }
-// }
-
-// cmdrCircle.draw();
-
-
-
-// const stopAnimation = () => {
-//     cancelAnimationFrame(requestID);
-//     animationRunning = false;
-// }
-
-// let requestID;
-// let animationRunning = false;
-
-
 
 // Event Listeners
 
