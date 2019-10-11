@@ -4,6 +4,8 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let raf;
 
+drawBackground();
+
 const game = {
     score: 0,
     lives: 3,
@@ -92,9 +94,8 @@ class MovingEnemy {
         this.x -= this.vx;
 
         if (this.x <= 0) {
-            this.x = 600;        
+            this.x = 600;
         }
-        
     }
 
     collide() {
@@ -152,6 +153,23 @@ const biker = {
     },
 }
 
+function drawGrid() {
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= canvas.width; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+    }
+    for (let i = 0; i <= canvas.height; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+    }
+}
 
 const vampire = {
     x: 0,
@@ -181,10 +199,11 @@ const vampire = {
 function drawBackground() {
     // drawing road
     ctx.fillStyle = 'grey';
-    ctx.fillRect(0, 450, canvas.width, 50);
-    ctx.fillRect(0, 250, canvas.width, 50);
+    ctx.fillRect(0, 350, canvas.width, 50);
+    ctx.fillRect(0, 200, canvas.width, 50);
     ctx.fillRect(0, 650, canvas.width, 50);
-    ctx.fillRect(0, 150, canvas.width, 50);
+    ctx.fillRect(0, 50, canvas.width, 50);
+    ctx.fillRect(0, 500, canvas.width, 50);
 
 
 
@@ -198,12 +217,16 @@ function drawBackground() {
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.moveTo(0, 350);
-    ctx.lineTo(700, 350)
+    ctx.moveTo(0, 650);
+    ctx.lineTo(700, 650)
     ctx.strokeStyle = 'white';
     ctx.setLineDash([0]);
     ctx.strokeWidth = 4;
     ctx.stroke();
+
+    ctx.beginPath(); ctx.moveTo(0, 650); ctx.lineTo(700, 650) ctx.strokeStyle
+    = 'white'; ctx.setLineDash([0]); ctx.strokeWidth = 4; ctx.stroke();
+
 
     ctx.beginPath();
     ctx.moveTo(0, 305);
@@ -215,7 +238,7 @@ function drawBackground() {
 
     // field
     ctx.fillStyle = 'rgb(11, 102, 35)';
-    ctx.fillRect(0, 0, 700, 100);
+    ctx.fillRect(0, 0, 700, 50);
 }
 
 function clearCanvas() {
@@ -224,7 +247,6 @@ function clearCanvas() {
 
 // let x = 0;
 function animate() {
-    movingEnemy.move();
     clearCanvas()
     drawBackground();
     game.drawPotholes()
@@ -313,7 +335,7 @@ document.getElementById('stop-animation').addEventListener('click', (event) => {
 
 document.addEventListener('keydown', (event) => {
     if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
-        biker.zmove(event.key)
+        biker.move(event.key)
     }
 
 });
