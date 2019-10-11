@@ -4,22 +4,6 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 let raf;
 
-//     // checkCollision: function(thing) {
-//     //     console.log("asdf")
-//     //     if (
-//     //         this.x + this.width > thing.x &&
-//     //         this.x < thing.x + thing.width &&
-//     //         this.y + this.height > thing.y &&
-//     //         this.y < thing.y + thing.height
-//     //     ) {
-//     //         console.log("collision");
-//     //         return true
-//     //     } 
-//     //     else return false;
-//     // },
-// }
-// drawBackground();
-
 const game = {
     score: 0,
     lives: 3,
@@ -47,7 +31,6 @@ const game = {
     createCars: function() {
         for (let i = 0; i < 3; i++) {
             let car = new MovingEnemy('car', 100, 50, 'red', 5, 600, 100)
-
             this.cars.push(car);
         }
         console.log(this.cars)
@@ -80,13 +63,12 @@ const game = {
         }
 
     },
+
     gameOver: function() {
 
     },
-    checkCollision: function() {
-        const rect1 = [biker.x, biker.y, biker.width, biker.height]
 
-    },
+    checkCollision: function() {},
 
 }
 
@@ -97,7 +79,7 @@ class MovingEnemy {
         this.height = height;
         this.color = color;
         this.vx = vx;
-        this.x = x ;
+        this.x = x;
         this.y = y;
     }
     draw() {
@@ -108,14 +90,13 @@ class MovingEnemy {
     }
     move() {
         this.x -= this.vx;
+
         if (this.x <= 0) {
-             this.x = 600
-             // this.x -= this.vx
+            this.x = 600;        
         }
-        // else {
-            // this.x = 600;
-        // }
+        
     }
+
     collide() {
 
     }
@@ -172,7 +153,7 @@ const biker = {
 }
 
 
-const box = {
+const vampire = {
     x: 0,
     y: 400,
     width: 50,
@@ -196,25 +177,6 @@ const box = {
 
     }
 }
-
-function drawGrid() {
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-
-    for (let i = 0; i <= canvas.width; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-    }
-    for (let i = 0; i <= canvas.height; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-    }
-}
-
 
 function drawBackground() {
     // drawing road
@@ -262,17 +224,16 @@ function clearCanvas() {
 
 // let x = 0;
 function animate() {
-    // movingEnemy.move();
+    movingEnemy.move();
     clearCanvas()
     drawBackground();
     game.drawPotholes()
     biker.draw();
     game.drawCars();
-    box.draw();
-    box.move();
+    vampire.draw();
+    vampire.move();
 
     window.requestAnimationFrame(animate)
-
 }
 
 
@@ -352,7 +313,7 @@ document.getElementById('stop-animation').addEventListener('click', (event) => {
 
 document.addEventListener('keydown', (event) => {
     if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft'].includes(event.key)) {
-        biker.move(event.key)
+        biker.zmove(event.key)
     }
 
 });
