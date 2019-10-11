@@ -2,7 +2,11 @@
 
 const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
+const dx = 60;
 let raf;
+
+let cyclistImage = new Image();
+cyclistImage.src = './media/13.png'
 
 drawBackground();
 
@@ -20,6 +24,7 @@ const game = {
 
         game.createPotholes();
         game.createCars();
+        game.createVampires();
         game.drawPotholes();
         game.drawCars();
         biker.draw();
@@ -28,27 +33,33 @@ const game = {
 
     createCars: function() {
         for (let i = 0; i < 3; i++) {
-            let car = new MovingEnemy('car', 100, 50, 'red', 5, 600, 100);
+            let car = new MovingEnemy('car', 70, 40, 'red', 5, 600, 105);
             this.cars.push(car);
         }
         console.log(this.cars)
     },
 
+    createVampires: function() {
+        for (let i = 0; i < 3; i++) {
+            let vampire = new MovingEnemy("vampire", 46, 46, 'yellow', 5, 400, 100);
+            this.vampires.push(vampire);
+        }
+        console.log(this.vampires);
+    },
+
     createPotholes: function() {
-        for (let i = 0; i < 6; i++) {
+        for (let i = 0; i < 10; i++) {
             let pothole = new StaticEnemy("pothole", 15, 'black')
             this.potholes.push(pothole);
         }
         console.log(this.potholes)
     },
 
-    createVampires: function() {
-        for (let i = 0; i < 3; i++) {
-            let vampire = new MovingEnemy("vampire", 50, 50, 'purple', 5, 400, 100);
-            this.vampires.push(vampire);
-        }
-        console.log(this.vampires);
+    drawVampires: function() {
+
     },
+
+  
 
     drawCars: function() {
         for (let i = 0; i < this.cars.length; i++) {
@@ -61,18 +72,16 @@ const game = {
         for (let i = 0; i < this.potholes.length; i++) {
             this.potholes[i].draw()
         }
-
     },
 }
 
-
 class MovingEnemy {
-    constructor(name, width, height, color, vx, x, y) {
+    constructor(name, width, height, color, speed, x, y) {
         this.name = name;
         this.width = width;
         this.height = height;
         this.color = color;
-        this.vx = vx;
+        this.speed = speed;
         this.x = x;
         this.y = y;
     }
@@ -83,7 +92,7 @@ class MovingEnemy {
         ctx.fill();
     }
     move() {
-        this.x -= this.vx;
+        this.x -= this.speed;
 
         if (this.x <= 0) {
             this.x = 600;
@@ -95,9 +104,7 @@ class StaticEnemy {
     constructor(name, r, color) {
         this.name = name;
         let rx = Math.floor(Math.random() * 700);
-
-        let ry = Math.floor(Math.random() * 700);
-        // 1 fix this to be on street
+        let ry = (Math.floor(Math.random() * 100) + 550)    
         this.x = rx
         this.y = ry
         this.r = r;
@@ -110,6 +117,8 @@ class StaticEnemy {
         ctx.fill();
     }
 }
+
+// User Object
 
 const biker = {
     x: 5,
@@ -137,36 +146,17 @@ const biker = {
         }
         if (key == "ArrowRight" && this.x + this.speed < canvas.width) {
             this.x += this.speed;
-        }
+        }1
     },
-}
-
-function drawGrid() {
-    ctx.strokeStyle = "black";
-    ctx.lineWidth = 1;
-
-    for (let i = 0; i <= canvas.width; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, canvas.height);
-        ctx.stroke();
-    }
-    for (let i = 0; i <= canvas.height; i += 50) {
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(canvas.width, i);
-        ctx.stroke();
-    }
 }
 
 const vampire = {
     x: 0,
-    y: 400,
-    width: 50,
-    height: 50,
+    y: 360,
+    width: 36,
+    height: 36,
     color: "purple",
-    vx: 5,
-    obstacleCenter: 50,
+    speed: 5,
     draw: function() {
         ctx.beginPath();
         ctx.rect(this.x, this.y, this.width, this.height);
@@ -175,14 +165,16 @@ const vampire = {
 
     },
     move: function() {
-        this.x += this.vx;
+        this.x += this.speed;
 
-        if (this.x + this.vx > canvas.width || this.x + this.vx < 0) {
-            this.vx = -this.vx;
+        if (this.x + this.speed > canvas.width || this.x + this.speed < 0) {
+            this.speed = -this.speed;
         }
 
     }
 }
+
+
 
 function drawBackground() {
     // drawing side walks
@@ -320,11 +312,7 @@ function drawBackground() {
     ctx.fillRect(0, 0, 700, 50);
 }
 
-function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-}
-
-// let x = 0;
+let x = 0;
 function animate() {
     clearCanvas()
     drawBackground();
@@ -336,11 +324,39 @@ function animate() {
 
     window.requestAnimationFrame(animate)
 }
+// Development Functions
+
+function drawGrid() {
+    ctx.strokeStyle = "black";
+    ctx.lineWidth = 1;
+
+    for (let i = 0; i <= canvas.width; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+    }
+    for (let i = 0; i <= canvas.height; i += 50) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+    }
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
 // Event Listeners
 
 document.getElementById('start-game').addEventListener('click', (event) => {
     game.start();
+});``
+
+document.getElementById('draw-grid').addEventListener('click', (event) => {
+    console.log('moo')
+    drawGrid();
 });
 
 document.addEventListener('keydown', (event) => {
